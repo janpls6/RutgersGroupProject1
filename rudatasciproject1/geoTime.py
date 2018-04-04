@@ -54,3 +54,14 @@ def checkResults(iteminSeries):
     else:
         #print(iteminSeries)
         return "False"
+
+    
+def getArrayFromGeokml(geokml):
+    try:
+        coord_string = geokml.strip("<Polygon><outerBoundaryIs><LinearRing><coordinates>").strip("</coordinates></LinearRing></outerBoundaryIs></Polygon>")
+        coord_string.strip("<MultiGeometry>").strip("</MultiGeometry>")
+        #print(coord_string)
+        zip_array = np.array([[np.float(item.split(",")[0]),np.float(item.split(",")[1])] for item in coord_string.split()])
+        return zip_array.T[0],zip_array.T[1]
+    except:
+        pass
